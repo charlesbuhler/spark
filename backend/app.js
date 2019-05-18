@@ -9,6 +9,7 @@ const port = 8080
 
 // parse application/json
 app.use(bodyParser.json())
+app.use(cors());
 
 const whitelist = ['http://localhost:3000']
 const corsOptions = {

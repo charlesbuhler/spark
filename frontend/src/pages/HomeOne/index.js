@@ -52,9 +52,6 @@ class HomeOne extends React.Component {
     }).catch(e => {
       console.log(e)
     }).finally(() => {
-      this.setState({
-        isLoading: false
-      })
     });
   }
 
