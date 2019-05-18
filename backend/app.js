@@ -1,6 +1,8 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 
+const { getUsagePercentile } = require('./Services/RetrofitService');
+
 const app = express()
 const port = 8080
 
@@ -78,11 +80,11 @@ app.get('/start-retrofit', (req, res) => {
       return;
     }
 
-    const percentileOfUsage = {
-      'usagePercentile': 98.0
+    const usagePercentilePayload = {
+      'usagePercentile': getUsagePercentile(requestPayload)
     }
 
-    res.status(200).send(percentileOfUsage);
+    res.status(200).send(usagePercentilePayload);
   });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
