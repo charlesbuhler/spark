@@ -53,4 +53,31 @@ app.get('/start-retrofit', (req, res) => {
    res.send(recomendations);
  });
 
+ /**
+  * CITY,
+  * SOLAR_Boolean,
+  * BEDROOMS,
+  * GARAGE,
+  * HEAT_AIR_COND,
+  * TOTAL_AREA,
+  * TOTAL_ROOMS,
+  * DECADE_BUILT,
+  * Advanced_Vehicle_Fuel,
+  *
+  */
+  app.post('/retrofit-viability', (req, res) => {
+    const requestPayload = req.body;
+
+    if (!requestPayload) {
+      res.status(400).send({'message': 'Missing data'});
+      return;
+    }
+
+    const percentileOfUsage = {
+      'usagePercentile': 98.0
+    }
+
+    res.status(200).send(percentileOfUsage);
+  });
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
