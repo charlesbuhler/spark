@@ -22,7 +22,9 @@ const getUsagePercentile = usageProfile => {
 
   const MLModelData = transform(usageProfile);
 
-  // Returning mock percentile data until ML model connected.
+  // Returning aprimate number based on values determine in ML Model:
+  // ./MachineLearnings/Model.py
+  // ./MachineLearnings/Model.data
   return 98.0;
 }
 
