@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import Row from 'zero-component-library/src/components/Row';
 import Col from 'zero-component-library/src/components/Col';
 import Image from 'zero-component-library/src/components/Image';
@@ -35,9 +34,6 @@ function App() {
             </Row>
           </Row>
         </Col>
-      </Row>
-      <Row style={{height: 230, borderBottom: '1px solid #CCCCCC'}}>
-
       </Row>
     </div>
   );

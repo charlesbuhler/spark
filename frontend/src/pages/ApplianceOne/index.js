@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import Header from '../../components/Header';
 import Row from 'zero-component-library/src/components/Row';
 import Col from 'zero-component-library/src/components/Col';
@@ -9,18 +8,14 @@ import Input from 'zero-component-library/src/components/Input';
 import Button from 'zero-component-library/src/components/Button';
 import { withRouter } from "react-router";
 
-const client = axios.create({
-  withCredentials: true,
-  headers: {
-    'Authorization': 'Bearer charles',
-  },
-});
+class ApplianceOne extends React.Component {
 
-class HomeOne extends React.Component {
   constructor(props) {
     super(props);
-    
-    this.
+
+    this.state = { 
+      isSelected: null,
+    };
   }
 
   handleChange = (event) => {
@@ -31,24 +26,19 @@ class HomeOne extends React.Component {
 
   handleOnNext = () => {
     const { history } = this.props;
-    history.push('home-2');
+    history.push('appliance-2');
   }
+
+  chooseType = (type) => {
+    console.log(type)
+    this.setState({
+      isSelected: type,
+    });
+  }
+
 
   componentDidMount() {
 
-    fetch('https://us-central1-decent-ellipse-241015.cloudfunctions.net/start-retrofit', {
-      method: 'GET', // *GET, POST, PUT, DELETE, etc.
-      mode: 'no-cors', // no-cors, cors, *same-origin
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      }),
-    }).then(result => {
-      console.log(result)
-    }).catch(e => {
-      console.log(e)
-    })
   }
 
   render() {
@@ -56,6 +46,9 @@ class HomeOne extends React.Component {
 
     } = this.props;
 
+    const {
+      isSelected
+    } = this.state;
 
     return (
       <Row flexDirection='column' alignItems={'flex-start'} style={{height: '100vh'}}>
@@ -64,17 +57,15 @@ class HomeOne extends React.Component {
           <div style={{paddingBottom: '100px'}}>
             <Row pad={[64, 0, 16, 0]}>
               <Col xs={12}>
-                <Text size={34} weight='medium'>Tell us about you home?</Text>
-              </Col>
-            </Row>
-            <Row pad={{bottom: 42}}>
-              <Col xs={12}>
-                <Text size={22} align='center'>This will help us identify rebates in your area?</Text>
+                <Text size={34} weight='medium'>Is your Stove gas or electric?</Text>
               </Col>
             </Row>
             <Row justifyContent='center' pad={{bottom: 50}}>
-              <Col xs={8}>
-                <Input placeholder='address' onChange={()=> {}} />
+              <Col xs={12} pad={16}>
+                <Row justifyContent='center'>
+                  <Button onClick={() => this.chooseType('gas')} style={{marginRight: '16px'}} secondary={isSelected !== 'gas'} color={isSelected !== 'gas' ? 'gray.dark' : 'warmAccent.base'}>Gas</Button>
+                  <Button onClick={() => this.chooseType('electric')} secondary={isSelected !== 'electric'} color={isSelected !== 'electric' ? 'gray.dark' : 'warmAccent.base'}>Electric</Button>
+                </Row>
               </Col>
             </Row>
             <Row justifyContent='center'>
@@ -87,8 +78,8 @@ class HomeOne extends React.Component {
   }
 }
 
-HomeOne.propTypes = {
+ApplianceOne.propTypes = {
 
 };
 
-export default withRouter(HomeOne);
+export default withRouter(ApplianceOne);
