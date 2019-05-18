@@ -103,7 +103,7 @@ app.post('/get-recommendations', cors(corsOptions), (req, res) => {
     return;
   }
 
-  const usagePercentilePayload = 97;//getRecommendations(requestPayload)
+  const usagePercentilePayload = getRecommendations(requestPayload)
 
   res.status(200).send(usagePercentilePayload);
 });
