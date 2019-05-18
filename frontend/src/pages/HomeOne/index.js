@@ -54,6 +54,9 @@ class HomeOne extends React.Component {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       }),
+      body: JSON.stringify({
+        "test": "test"
+      }),
     }).then(result => {
       console.log(result)
     }).catch(e => {
@@ -68,9 +71,9 @@ class HomeOne extends React.Component {
 
 
     return (
-      <Row flexDirection='column' alignItems={'flex-start'} style={{height: '100vh'}}>
+      <Row flexDirection='column' alignItems={'flex-start'}>
         <Header />
-        <Row justifyContent='flex-start' flexDirection='column' style={{flexGrow: 1, overflow: 'auto'}}>
+        <Row justifyContent='flex-start' flexDirection='column' style={{flexGrow: 1, overflow: 'scroll'}}>
           <div style={{paddingBottom: '100px'}}>
             <Row pad={[64, 0, 16, 0]}>
               <Col xs={12}>
@@ -79,7 +82,7 @@ class HomeOne extends React.Component {
             </Row>
             <Row pad={{bottom: 32}}>
               <Col xs={12}>
-                <Text size={22} align='center'>This will help us estimate your energy load.</Text>
+                <Text size={18}>This will help us estimate your energy load.</Text>
               </Col>
             </Row>
             <Row justifyContent='center' pad={{bottom: 24}}>
@@ -92,18 +95,18 @@ class HomeOne extends React.Component {
               <Input label='Bedrooms' placeholder='How many bedrooms is your home?' onChange={()=> {}} />
             </Row>
             <Row justifyContent='center' pad={{bottom: 24}}>
-              <Input label='Bedrooms' placeholder='How many bedrooms is your home?' onChange={()=> {}} />
+              <Input label='Square Footage' placeholder='How many square feet is your home?' onChange={()=> {}} />
             </Row>
-            {/* <Row justifyContent='center' pad={{bottom: 50}}>
-                <Input label='Bedrooms' placeholder='How many bedrooms is your home?' onChange={()=> {}} />
-            </Row> */}
-            {/* <Row justifyContent='center' pad={{bottom: 50}}>
+            <Row justifyContent='center' pad={{bottom: 24}}>
+                <Input label='Home Age' placeholder='When was your home built?' onChange={()=> {}} />
+            </Row>
+            <Row justifyContent='center' pad={{bottom: 8}}>
                 <Text>Do you have a solar system?</Text>
-            </Row> */}
-            {/* <Row>
+            </Row>
+            <Row>
                 <Button onClick={() => this.select('SOLAR_Boolean', true)} style={{marginRight: '16px'}} secondary={!form['SOLAR_Boolean']} color={!form['SOLAR_Boolean'] ? 'gray.dark' : 'warmAccent.base'}>Gas</Button>
                 <Button onClick={() => this.select('SOLAR_Boolean', false)} secondary={!form['SOLAR_Boolean']} color={!form['SOLAR_Boolean'] ? 'gray.dark' : 'warmAccent.base'}>Electric</Button>
-            </Row> */}
+            </Row>
           </div>
         </Row>
       </Row>
