@@ -1,5 +1,8 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
+
+const { getUsagePercentile } = require('./Services/RetrofitService');
 
 const app = express()
 const port = 8080
@@ -7,7 +10,14 @@ const port = 8080
 // parse application/json
 app.use(bodyParser.json())
 
-app.get('/', (req, res) => res.send('Spark is live!'))
+const whitelist = ['http://localhost:3000']
+const corsOptions = {
+  origin: function (origin, callback) {
+    callback(null, true)
+  }
+}
+
+app.get('/', cors(corsOptions), (req, res) => res.send('Spark is live!'))
 
 /**
  * Kick of a Retrofit by generating a retrofit id
@@ -17,7 +27,7 @@ app.get('/', (req, res) => res.send('Spark is live!'))
  * Check that id has not been used for a previous retrofit
  * Return the retrofit id
  */
-app.get('/start-retrofit', (req, res) => {
+app.get('/start-retrofit', cors(corsOptions), (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
   const retrofitId = Math.floor(Math.random()*90000) + 10000;
@@ -30,7 +40,7 @@ app.get('/start-retrofit', (req, res) => {
  * Add home info to model
  *
  */
- app.get('/update-home-info', (req, res) => {
+ app.get('/update-home-info', cors(corsOptions), (req, res) => {
    res.status(200).send('OK');
  });
 
@@ -38,7 +48,7 @@ app.get('/start-retrofit', (req, res) => {
  * Add appliance info to model
  *
  */
- app.get('/use-appliance-info', (req, res) => {
+ app.get('/use-appliance-info', cors(corsOptions), (req, res) => {
    res.status(200).send('OK');
  });
 
@@ -47,7 +57,7 @@ app.get('/start-retrofit', (req, res) => {
  * get a list of recommendations.
  *
  */
- app.get('/get-retrofit-recommendations', (req, res) => {
+ app.get('/get-retrofit-recommendations', cors(corsOptions), (req, res) => {
    res.setHeader('Content-Type', 'application/json');
 
    const recomendation1 = {"name": "hot-water-heater-upgrade", "message": "electrify your hot water heater.", "annual-savings": 200};
@@ -70,7 +80,7 @@ app.get('/start-retrofit', (req, res) => {
   * Advanced_Vehicle_Fuel,
   *
   */
-  app.post('/retrofit-viability', (req, res) => {
+  app.post('/retrofit-viability', cors(corsOptions), (req, res) => {
     const requestPayload = req.body;
 
     if (!requestPayload) {
@@ -78,11 +88,11 @@ app.get('/start-retrofit', (req, res) => {
       return;
     }
 
-    const percentileOfUsage = {
-      'usagePercentile': 98.0
+    const usagePercentilePayload = {
+      'usagePercentile': getUsagePercentile(requestPayload)
     }
 
-    res.status(200).send(percentileOfUsage);
+    res.status(200).send(usagePercentilePayload);
   });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
