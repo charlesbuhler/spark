@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const { getUsagePercentile } = require('./Services/RetrofitService');
+const { getRecomendations } = require('./Services/RecommendationService');
 
 const app = express()
 const port = 8080
@@ -81,19 +82,32 @@ app.get('/start-retrofit', cors(corsOptions), (req, res) => {
   * Advanced_Vehicle_Fuel,
   *
   */
-  app.post('/retrofit-viability', cors(corsOptions), (req, res) => {
-    const requestPayload = req.body;
+app.post('/retrofit-viability', cors(corsOptions), (req, res) => {
+  const requestPayload = req.body;
 
-    if (!requestPayload) {
-      res.status(400).send({'message': 'Missing data'});
-      return;
-    }
+  if (!requestPayload) {
+    res.status(400).send({'message': 'Missing data'});
+    return;
+  }
 
-    const usagePercentilePayload = {
-      'usagePercentile': getUsagePercentile(requestPayload)
-    }
+  const usagePercentilePayload = {
+    'usagePercentile': getUsagePercentile(requestPayload)
+  }
 
-    res.status(200).send(usagePercentilePayload);
-  });
+  res.status(200).send(usagePercentilePayload);
+});
+
+app.post('/get-recomendations', cors(corsOptions), (req, res) => {
+  const requestPayload = req.body;
+
+  if (!requestPayload) {
+    res.status(400).send({'message': 'Missing data'});
+    return;
+  }
+
+  const usagePercentilePayload = getRecomendations(requestPayload)
+
+  res.status(200).send(usagePercentilePayload);
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
