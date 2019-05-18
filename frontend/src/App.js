@@ -14,7 +14,7 @@ function App() {
         <Col xs={12}>
           <Row flexDirection='column' justifyContent={'center'}>
             <Row justifyContent={'center'}>
-              <Col xs={4}>
+              <Col xs={3}>
                 <Image width={500} naturalHeight={214} naturalWidth={500} alt='spark logo' src='./Spark.png' />
               </Col>
             </Row>

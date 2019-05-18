@@ -5,11 +5,16 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import HomeOne from './pages/HomeOne';
+import Theme from 'zero-component-library/src/components/Theme';
 
 ReactDOM.render((
   <Router>
-    <Route path="/" exact component={App} />
-    <Route path="/home-1" exact component={HomeOne} />
+    <Theme>
+      <div>    
+        <Route path="/" exact component={App} />
+        <Route path="/home-1" exact component={HomeOne} />
+      </div>
+    </Theme>
   </Router>
 ), document.getElementById('root'));
 
