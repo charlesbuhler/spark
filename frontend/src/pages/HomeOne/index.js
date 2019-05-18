@@ -9,12 +9,16 @@ import Input from 'zero-component-library/src/components/Input';
 import Button from 'zero-component-library/src/components/Button';
 import { withRouter } from "react-router";
 
-const client = axios.create({
-  withCredentials: true,
-  headers: {
-    'Authorization': 'Bearer charles',
-  },
-});
+const submitForm = (body) => {
+  return fetch('http://localhost:8080/retrofit-viability', {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    }),
+    body: JSON.stringify(body),
+  });
+};
 
 class HomeOne extends React.Component {
   constructor(props) {
@@ -26,42 +30,48 @@ class HomeOne extends React.Component {
         SOLAR_Boolean: null,
         BEDROOMS: 0,
         GARAGE: null,
-        HEAT_AIR_COND: null,
         TOTAL_AREA: null,
         DECADE_BUILT: null,
+        AIR: null,
+        HEAT: null,
       }
     };
   }
 
-  handleChange = (event) => {
-    const { onChange } = this.props;
-
-    onChange({ event, value: event.currentTarget.value });
-  };
-
-  handleOnNext = () => {
+  handleSubmit = () => {
     const { history } = this.props;
-    history.push('home-2');
-  }
+    const { form } = this.state;
 
-  componentDidMount() {
+    this.setState({
+      isLoading: true
+    })
 
-    fetch('http://localhost:8080/retrofit-viability', {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      mode: 'no-cors', // no-cors, cors, *same-origin
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      }),
-      body: JSON.stringify({
-        "test": "test"
-      }),
-    }).then(result => {
+    submitForm(form).then(result => {
       console.log(result)
+      history.push('viability?precentile=90');
     }).catch(e => {
       console.log(e)
-    })
+    }).finally(() => {
+      this.setState({
+        isLoading: false
+      })
+    });
+  }
+
+  handleChange = (key, value) => {
+    const { form } = this.state;
+
+    const newForm = {
+      ...form,
+      [key]: value,
+    };
+    
+    this.setState({
+      form: newForm
+    });
+  } 
+
+  componentDidMount() {
   }
 
   render() {
@@ -69,6 +79,7 @@ class HomeOne extends React.Component {
       form
     } = this.state;
 
+    console.log(form)
 
     return (
       <Row flexDirection='column' alignItems={'flex-start'}>
@@ -86,26 +97,47 @@ class HomeOne extends React.Component {
               </Col>
             </Row>
             <Row justifyContent='center' pad={{bottom: 24}}>
-                <Input label='City' placeholder='What city do you live in?' onChange={()=> {}} />
+                <Input label='City' placeholder='What city do you live in?' onChange={(e) => this.handleChange('CITY', e.target.value)} />
             </Row>
             <Row justifyContent='center' pad={{bottom: 24}}>
-                <Input label='Square Footage' placeholder='What is the square footage of your home?' onChange={()=> {}} />
+                <Input label='Square Footage' placeholder='What is the square footage of your home?'  onChange={(e) => this.handleChange('TOTAL_AREA', e.target.value)} />
             </Row>
             <Row justifyContent='center' pad={{bottom: 24}}>
-              <Input label='Bedrooms' placeholder='How many bedrooms is your home?' onChange={()=> {}} />
+              <Input label='Bedrooms' placeholder='How many bedrooms is your home?'  onChange={(e) => this.handleChange('BEDROOMS', e.target.value)} />
             </Row>
             <Row justifyContent='center' pad={{bottom: 24}}>
-              <Input label='Square Footage' placeholder='How many square feet is your home?' onChange={()=> {}} />
+                <Input label='Home Age' placeholder='When was your home built?'  onChange={(e) => this.handleChange('DECADE_BUILT', e.target.value)} />
             </Row>
-            <Row justifyContent='center' pad={{bottom: 24}}>
-                <Input label='Home Age' placeholder='When was your home built?' onChange={()=> {}} />
-            </Row>
-            <Row justifyContent='center' pad={{bottom: 8}}>
+            <Row justifyContent='flex-start' pad={{bottom: 8}}>
                 <Text>Do you have a solar system?</Text>
             </Row>
             <Row>
-                <Button onClick={() => this.select('SOLAR_Boolean', true)} style={{marginRight: '16px'}} secondary={!form['SOLAR_Boolean']} color={!form['SOLAR_Boolean'] ? 'gray.dark' : 'warmAccent.base'}>Gas</Button>
-                <Button onClick={() => this.select('SOLAR_Boolean', false)} secondary={!form['SOLAR_Boolean']} color={!form['SOLAR_Boolean'] ? 'gray.dark' : 'warmAccent.base'}>Electric</Button>
+                <Button onClick={() => this.handleChange('SOLAR_Boolean', true)} style={{marginRight: '16px'}} secondary color={form['SOLAR_Boolean'] === true ? 'warmAccent.base' : 'gray.dark'}>Yes</Button>
+                <Button onClick={() => this.handleChange('SOLAR_Boolean', false)} secondary color={form['SOLAR_Boolean'] === false ? 'warmAccent.base' : 'gray.dark'}>No</Button>
+            </Row>
+            <Row justifyContent='flex-start' pad={{bottom: 8}}>
+                <Text>Do you have a garage?</Text>
+            </Row>
+            <Row pad={{bottom: 16}}>
+                <Button onClick={() => this.handleChange('GARAGE', true)} style={{marginRight: '16px'}} secondary color={form['GARAGE'] === true ? 'warmAccent.base' : 'gray.dark'}>Yes</Button>
+                <Button onClick={() => this.handleChange('GARAGE', false)} secondary color={form['GARAGE'] === false ? 'warmAccent.base' : 'gray.dark'}>No</Button>
+            </Row>
+            <Row justifyContent='flex-start' pad={{bottom: 8}}>
+                <Text>Do you have a heater?</Text>
+            </Row>
+            <Row pad={{bottom: 16}}>
+                <Button onClick={() => this.handleChange('HEAT', true)} style={{marginRight: '16px'}} secondary color={form['HEAT'] === true ? 'warmAccent.base' : 'gray.dark'}>Yes</Button>
+                <Button onClick={() => this.handleChange('HEAT', false)} secondary color={form['HEAT'] === false ?  'warmAccent.base' : 'gray.dark'}>No</Button>
+            </Row>
+            <Row justifyContent='flex-start' pad={{bottom: 8}}>
+                <Text>Do you have air conditioning?</Text>
+            </Row>
+            <Row pad={{bottom: 32}}>
+                <Button onClick={() => this.handleChange('AIR', true)} style={{marginRight: '16px'}} secondary color={form['AIR'] ? 'warmAccent.base' : 'gray.dark'}>Yes</Button>
+                <Button onClick={() => this.handleChange('AIR', false)} secondary color={form['AIR'] === false ?  'warmAccent.base' : 'gray.dark'}>No</Button>
+            </Row>
+            <Row justifyContent='center'>
+                <Button onClick={() => this.handleSubmit()}>Submit</Button>
             </Row>
           </div>
         </Row>
