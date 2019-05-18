@@ -32,8 +32,27 @@ TOTAL_AREA: "1445"
 // "DECADE_BUILT": "1970",
 // }
 
+const { transform } = require('../Transformers/UsageProfileToMLModelTransformer');
 
-const getUsagePercentile = (usageProfile) => {
+const validateSchema = usageProfile => {
+  // const keys = usageProfile.keys();
+  // console.log('k', keys)
+  // if (!keys.contains('AIR')) {
+  //   return false;
+  // }
+  // TODO: Add rest of schema
+  return true;
+}
+
+
+const getUsagePercentile = usageProfile => {
+  if (!validateSchema(usageProfile)) {
+    return "Missing data."
+  }
+
+
+  const MLModelData = transform(usageProfile);
+
   // Returning mock percentile data until ML model connected.
   return 98.0;
 }
