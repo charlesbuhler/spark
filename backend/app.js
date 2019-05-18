@@ -95,7 +95,7 @@ app.post('/retrofit-viability', cors(corsOptions), (req, res) => {
  * in a homeowner's home.
  *
  */
-app.post('/get-recomendations', cors(corsOptions), (req, res) => {
+app.post('/get-recommendations', cors(corsOptions), (req, res) => {
   const requestPayload = req.body;
 
   if (!requestPayload) {
@@ -103,7 +103,7 @@ app.post('/get-recomendations', cors(corsOptions), (req, res) => {
     return;
   }
 
-  const usagePercentilePayload = getRecomendations(requestPayload)
+  const usagePercentilePayload = 97;//getRecomendations(requestPayload)
 
   res.status(200).send(usagePercentilePayload);
 });
