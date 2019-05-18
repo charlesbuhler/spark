@@ -107,7 +107,7 @@ class ApplianceOne extends React.Component {
                 <Text>Is your dryer gas or electric?</Text>
             </Row>
             <Row pad={{bottom: 32}}>
-                <Button onClick={() => this.handleChange('dryer', 'ELECTRIC')} style={{marginRight: '16px'}} secondary color={form['dryer'] ? 'warmAccent.base' : 'gray.dark'}>Yes</Button>
+                <Button onClick={() => this.handleChange('dryer', 'ELECTRIC')} style={{marginRight: '16px'}} secondary color={form['dryer'] === 'ELECTRIC' ? 'warmAccent.base' : 'gray.dark'}>Yes</Button>
                 <Button onClick={() => this.handleChange('dryer', 'GAS')} secondary color={form['dryer'] === 'GAS' ?  'warmAccent.base' : 'gray.dark'}>No</Button>
             </Row>
             <Row justifyContent='center'>
