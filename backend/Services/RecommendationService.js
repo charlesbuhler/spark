@@ -29,7 +29,7 @@ const RECOMMENDATION_LIST = {
   }
 }
 
-const getRecomendations = (gasElectricProfile) => {
+const getRecommendations = (gasElectricProfile) => {
   let recommendations = [];
 
   if (gasElectricProfile.stove !== 'ELECTRIC') {
@@ -45,4 +45,4 @@ const getRecomendations = (gasElectricProfile) => {
   return recommendations;
 }
 
-module.exports = { getRecomendations }
+module.exports = { getRecommendations }

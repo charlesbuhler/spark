@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const { getUsagePercentile } = require('./Services/RetrofitService');
-const { getRecomendations } = require('./Services/RecommendationService');
+const { getRecommendations } = require('./Services/RecommendationService');
 
 const app = express()
 const port = 8080
@@ -103,7 +103,7 @@ app.post('/get-recommendations', cors(corsOptions), (req, res) => {
     return;
   }
 
-  const usagePercentilePayload = 97;//getRecomendations(requestPayload)
+  const usagePercentilePayload = 97;//getRecommendations(requestPayload)
 
   res.status(200).send(usagePercentilePayload);
 });
