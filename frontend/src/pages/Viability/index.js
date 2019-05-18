@@ -7,6 +7,7 @@ import Text from 'zero-component-library/src/components/Text';
 import Input from 'zero-component-library/src/components/Input';
 import Button from 'zero-component-library/src/components/Button';
 import { withRouter } from "react-router";
+import queryString from 'query-string'
 
 class Viability extends React.Component {
 
@@ -18,33 +19,29 @@ class Viability extends React.Component {
     };
   }
 
-  handleChange = (event) => {
-    const { onChange } = this.props;
-
-    onChange({ event, value: event.currentTarget.value });
-  };
-
-  handleOnNext = () => {
+  handleSubmit = () => {
     const { history } = this.props;
-    history.push('appliance-3');
+    history.push('appliance-1');
   }
-
-  chooseType = (type) => {
-    console.log(type)
-    this.setState({
-      isSelected: type,
-    });
-  }
-
 
   componentDidMount() {
+    const {
+      location
+    } = this.props;
 
+    const params = queryString.parse(location.search);
+
+    this.setState({
+      ...params
+    })
   }
 
   render() {
     const {
+      percentile
+    } = this.state;
 
-    } = this.props;
+    console.log('percentile', percentile);
 
     const {
       isSelected
@@ -55,10 +52,18 @@ class Viability extends React.Component {
         <Header />
         <Row justifyContent='flex-start' flexDirection='column' style={{flexGrow: 1}}>
           <div style={{paddingBottom: '100px'}}>
-            <Row pad={[64, 0, 16, 0]}>
-              <Col xs={12}>
-                <Text size={34} weight='medium'>Your estimated gas usage in the {}</Text>
+            <Row justifyContent='center' pad={[64, 0, 32, 0]}>
+              <Col xs={8}>
+                <Text size={34} align='center' weight='medium'>Your estimated gas usage is in the <Text weight={'medium'} size={34} inline color='#FF9678'>{percentile}th</Text> percentile!</Text>
               </Col>
+            </Row>
+            <Row justifyContent='center'>
+              <Col xs={8} pad={8}>
+                <Text size={22} align='center'>We might be able to help.</Text>
+              </Col>
+            </Row>
+            <Row justifyContent='center'>
+                <Button onClick={this.handleSubmit}>Let's Find Out</Button>
             </Row>
           </div>
         </Row>

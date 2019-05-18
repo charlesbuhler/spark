@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import Header from '../../components/Header';
 import Row from 'zero-component-library/src/components/Row';
 import Col from 'zero-component-library/src/components/Col';
@@ -8,68 +9,109 @@ import Input from 'zero-component-library/src/components/Input';
 import Button from 'zero-component-library/src/components/Button';
 import { withRouter } from "react-router";
 
-class ApplianceOne extends React.Component {
+const submitForm = (body) => {
+  return fetch('http://localhost:8080/get-recommendations', {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    }),
+    body: JSON.stringify(body),
+  });
+};
 
+class ApplianceOne extends React.Component {
   constructor(props) {
     super(props);
+    
+    this.state = {
+      form: {
+        stove: null,
+        waterHeater: null,
+        dryer: null,
+      },
+      reccomendations: [
 
-    this.state = { 
-      isSelected: null,
+      ]
     };
   }
 
-  handleChange = (event) => {
-    const { onChange } = this.props;
-
-    onChange({ event, value: event.currentTarget.value });
-  };
-
-  handleOnNext = () => {
+  handleSubmit = () => {
     const { history } = this.props;
-    history.push('appliance-2');
-  }
+    const { form } = this.state;
 
-  chooseType = (type) => {
-    console.log(type)
     this.setState({
-      isSelected: type,
+      isLoading: true
+    })
+
+    submitForm(form).then(result => {
+      this.setState({
+        recommendations: result
+      });
+    }).catch(e => {
+      console.log(e)
+    }).finally(() => {
     });
   }
 
+  handleChange = (key, value) => {
+    const { form } = this.state;
 
-  componentDidMount() {
-
-  }
+    const newForm = {
+      ...form,
+      [key]: value,
+    };
+    
+    this.setState({
+      form: newForm
+    });
+  } 
 
   render() {
     const {
-
-    } = this.props;
-
-    const {
-      isSelected
+      form
     } = this.state;
 
+    console.log(form)
+
     return (
-      <Row flexDirection='column' alignItems={'flex-start'} style={{height: '100vh'}}>
+      <Row flexDirection='column' alignItems={'flex-start'}>
         <Header />
-        <Row justifyContent='flex-start' flexDirection='column' style={{flexGrow: 1}}>
+        <Row justifyContent='flex-start' flexDirection='column' style={{flexGrow: 1, overflow: 'scroll'}}>
           <div style={{paddingBottom: '100px'}}>
             <Row pad={[64, 0, 16, 0]}>
               <Col xs={12}>
-                <Text size={34} weight='medium'>Is your Stove gas or electric?</Text>
+                <Text size={34} weight='medium'>Let's learn about your appliances.</Text>
               </Col>
             </Row>
-            <Row justifyContent='center' pad={{bottom: 50}}>
-              <Col xs={12} pad={16}>
-                <Row justifyContent='center'>
-                  <Button onClick={() => this.chooseType('gas')} style={{marginRight: '16px'}} secondary={isSelected !== 'gas'} color={isSelected !== 'gas' ? 'gray.dark' : 'warmAccent.base'}>Gas</Button>
-                  <Button onClick={() => this.chooseType('electric')} secondary={isSelected !== 'electric'} color={isSelected !== 'electric' ? 'gray.dark' : 'warmAccent.base'}>Electric</Button>
-                </Row>
+            <Row pad={{bottom: 32}}>
+              <Col xs={12}>
+                <Text size={18}>This will help us recommend upgrades.</Text>
               </Col>
+            </Row>
+            <Row justifyContent='flex-start' pad={{bottom: 8}}>
+                <Text>Is your stove gas or electric?</Text>
+            </Row>
+            <Row pad={{bottom: 16}}>
+                <Button onClick={() => this.handleChange('stove', 'ELECTRIC')} style={{marginRight: '16px'}} secondary color={form['stove'] === 'ELECTRIC' ? 'warmAccent.base' : 'gray.dark'}>Yes</Button>
+                <Button onClick={() => this.handleChange('stove', 'GAS')} secondary color={form['stove'] === 'GAS' ? 'warmAccent.base' : 'gray.dark'}>No</Button>
+            </Row>
+            <Row justifyContent='flex-start' pad={{bottom: 8}}>
+                <Text>Is your water heater gas or electric?</Text>
+            </Row>
+            <Row pad={{bottom: 16}}>
+                <Button onClick={() => this.handleChange('waterHeater', 'ELECTRIC')} style={{marginRight: '16px'}} secondary color={form['waterHeater'] === 'ELECTRIC' ? 'warmAccent.base' : 'gray.dark'}>Yes</Button>
+                <Button onClick={() => this.handleChange('waterHeater', 'GAS')} secondary color={form['waterHeater'] === 'GAS' ?  'warmAccent.base' : 'gray.dark'}>No</Button>
+            </Row>
+            <Row justifyContent='flex-start' pad={{bottom: 8}}>
+                <Text>Is your dryer gas or electric?</Text>
+            </Row>
+            <Row pad={{bottom: 32}}>
+                <Button onClick={() => this.handleChange('dryer', 'ELECTRIC')} style={{marginRight: '16px'}} secondary color={form['dryer'] ? 'warmAccent.base' : 'gray.dark'}>Yes</Button>
+                <Button onClick={() => this.handleChange('dryer', 'GAS')} secondary color={form['dryer'] === 'GAS' ?  'warmAccent.base' : 'gray.dark'}>No</Button>
             </Row>
             <Row justifyContent='center'>
-              <Button onClick={this.handleOnNext} secondary color='warmAccent.base'>Next</Button>
+                <Button onClick={() => this.handleSubmit()}>Submit</Button>
             </Row>
           </div>
         </Row>

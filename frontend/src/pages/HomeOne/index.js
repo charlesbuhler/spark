@@ -47,8 +47,7 @@ class HomeOne extends React.Component {
     })
 
     submitForm(form).then(result => {
-      console.log(result)
-      history.push('viability?precentile=90');
+      history.push('viability?percentile=90');
     }).catch(e => {
       console.log(e)
     }).finally(() => {
@@ -67,9 +66,6 @@ class HomeOne extends React.Component {
       form: newForm
     });
   } 
-
-  componentDidMount() {
-  }
 
   render() {
     const {
