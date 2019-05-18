@@ -71,15 +71,8 @@ app.get('/start-retrofit', cors(corsOptions), (req, res) => {
  });
 
  /**
-  * CITY,
-  * SOLAR_Boolean,
-  * BEDROOMS,
-  * GARAGE,
-  * HEAT_AIR_COND,
-  * TOTAL_AREA,
-  * TOTAL_ROOMS,
-  * DECADE_BUILT,
-  * Advanced_Vehicle_Fuel,
+  * Determine the viability of the retrofit by seeing what energy usage
+  * percentile a homeowner is in.
   *
   */
 app.post('/retrofit-viability', cors(corsOptions), (req, res) => {
@@ -97,6 +90,11 @@ app.post('/retrofit-viability', cors(corsOptions), (req, res) => {
   res.status(200).send(usagePercentilePayload);
 });
 
+/**
+ * Get recomendations on what to retrofit given the applience profile
+ * in a homeowner's home.
+ *
+ */
 app.post('/get-recomendations', cors(corsOptions), (req, res) => {
   const requestPayload = req.body;
 
