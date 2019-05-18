@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const { getUsagePercentile } = require('./Services/RetrofitService');
+const { getRecomendations } = require('./Services/RecommendationService');
 
 const app = express()
 const port = 8080
@@ -70,30 +71,41 @@ app.get('/start-retrofit', cors(corsOptions), (req, res) => {
  });
 
  /**
-  * CITY,
-  * SOLAR_Boolean,
-  * BEDROOMS,
-  * GARAGE,
-  * HEAT_AIR_COND,
-  * TOTAL_AREA,
-  * TOTAL_ROOMS,
-  * DECADE_BUILT,
-  * Advanced_Vehicle_Fuel,
+  * Determine the viability of the retrofit by seeing what energy usage
+  * percentile a homeowner is in.
   *
   */
-  app.post('/retrofit-viability', cors(corsOptions), (req, res) => {
-    const requestPayload = req.body;
+app.post('/retrofit-viability', cors(corsOptions), (req, res) => {
+  const requestPayload = req.body;
 
-    if (!requestPayload) {
-      res.status(400).send({'message': 'Missing data'});
-      return;
-    }
+  if (!requestPayload) {
+    res.status(400).send({'message': 'Missing data'});
+    return;
+  }
 
-    const usagePercentilePayload = {
-      'usagePercentile': getUsagePercentile(requestPayload)
-    }
+  const usagePercentilePayload = {
+    'usagePercentile': getUsagePercentile(requestPayload)
+  }
 
-    res.status(200).send(usagePercentilePayload);
-  });
+  res.status(200).send(usagePercentilePayload);
+});
+
+/**
+ * Get recomendations on what to retrofit given the applience profile
+ * in a homeowner's home.
+ *
+ */
+app.post('/get-recommendations', cors(corsOptions), (req, res) => {
+  const requestPayload = req.body;
+
+  if (!requestPayload) {
+    res.status(400).send({'message': 'Missing data'});
+    return;
+  }
+
+  const usagePercentilePayload = 97;//getRecomendations(requestPayload)
+
+  res.status(200).send(usagePercentilePayload);
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
