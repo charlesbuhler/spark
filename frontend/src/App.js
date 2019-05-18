@@ -1,24 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Row from 'zero-component-library/src/components/Row';
+import Col from 'zero-component-library/src/components/Col';
+import Image from 'zero-component-library/src/components/Image';
+import Text from 'zero-component-library/src/components/Text';
+import Button from 'zero-component-library/src/components/Button';
+import {Link} from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Row style={{height: '400px', borderBottom: '1px solid #CCCCCC'}} flexDirection='row' justifyContent={'center'}>
+        <Col xs={12}>
+          <Row flexDirection='column' justifyContent={'center'}>
+            <Row justifyContent={'center'}>
+              <Col xs={4}>
+                <Image width={500} naturalHeight={214} naturalWidth={500} alt='spark logo' src='./Spark.png' />
+              </Col>
+            </Row>
+            <Row justifyContent={'center'}>
+              <Col xs={12} pad={{top: 16}}>
+                <Text weight='medium' singleLine align='center' size={42}>Electrify Your Home</Text>
+              </Col>
+            </Row>
+            <Row justifyContent={'center'} pad={{top: 32}}>
+              <Link
+                to={{
+                  pathname: "/home-1",
+                }}
+                style={{ textDecoration: 'none' }}
+              >
+                <Button>Get Started</Button>
+              </Link>
+            </Row>
+          </Row>
+        </Col>
+      </Row>
+      <Row style={{height: 230, borderBottom: '1px solid #CCCCCC'}}>
+
+      </Row>
     </div>
   );
 }
