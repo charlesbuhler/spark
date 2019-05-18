@@ -20,7 +20,17 @@ class HomeOne extends React.Component {
   constructor(props) {
     super(props);
     
-    this.
+    this.state = {
+      form: {
+        CITY: '',
+        SOLAR_Boolean: null,
+        BEDROOMS: 0,
+        GARAGE: null,
+        HEAT_AIR_COND: null,
+        TOTAL_AREA: null,
+        DECADE_BUILT: null,
+      }
+    };
   }
 
   handleChange = (event) => {
@@ -36,8 +46,8 @@ class HomeOne extends React.Component {
 
   componentDidMount() {
 
-    fetch('https://us-central1-decent-ellipse-241015.cloudfunctions.net/start-retrofit', {
-      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    fetch('http://localhost:8080/retrofit-viability', {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
       mode: 'no-cors', // no-cors, cors, *same-origin
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
       headers: new Headers({
@@ -53,33 +63,47 @@ class HomeOne extends React.Component {
 
   render() {
     const {
-
-    } = this.props;
+      form
+    } = this.state;
 
 
     return (
       <Row flexDirection='column' alignItems={'flex-start'} style={{height: '100vh'}}>
         <Header />
-        <Row justifyContent='flex-start' flexDirection='column' style={{flexGrow: 1}}>
+        <Row justifyContent='flex-start' flexDirection='column' style={{flexGrow: 1, overflow: 'auto'}}>
           <div style={{paddingBottom: '100px'}}>
             <Row pad={[64, 0, 16, 0]}>
               <Col xs={12}>
-                <Text size={34} weight='medium'>Tell us about you home?</Text>
+                <Text size={34} weight='medium'>Tell us about your home?</Text>
               </Col>
             </Row>
-            <Row pad={{bottom: 42}}>
+            <Row pad={{bottom: 32}}>
               <Col xs={12}>
-                <Text size={22} align='center'>This will help us identify rebates in your area?</Text>
+                <Text size={22} align='center'>This will help us estimate your energy load.</Text>
               </Col>
             </Row>
-            <Row justifyContent='center' pad={{bottom: 50}}>
-              <Col xs={8}>
-                <Input placeholder='address' onChange={()=> {}} />
-              </Col>
+            <Row justifyContent='center' pad={{bottom: 24}}>
+                <Input label='City' placeholder='What city do you live in?' onChange={()=> {}} />
             </Row>
-            <Row justifyContent='center'>
-              <Button onClick={this.handleOnNext} secondary color='warmAccent.base'>Next</Button>
+            <Row justifyContent='center' pad={{bottom: 24}}>
+                <Input label='Square Footage' placeholder='What is the square footage of your home?' onChange={()=> {}} />
             </Row>
+            <Row justifyContent='center' pad={{bottom: 24}}>
+              <Input label='Bedrooms' placeholder='How many bedrooms is your home?' onChange={()=> {}} />
+            </Row>
+            <Row justifyContent='center' pad={{bottom: 24}}>
+              <Input label='Bedrooms' placeholder='How many bedrooms is your home?' onChange={()=> {}} />
+            </Row>
+            {/* <Row justifyContent='center' pad={{bottom: 50}}>
+                <Input label='Bedrooms' placeholder='How many bedrooms is your home?' onChange={()=> {}} />
+            </Row> */}
+            {/* <Row justifyContent='center' pad={{bottom: 50}}>
+                <Text>Do you have a solar system?</Text>
+            </Row> */}
+            {/* <Row>
+                <Button onClick={() => this.select('SOLAR_Boolean', true)} style={{marginRight: '16px'}} secondary={!form['SOLAR_Boolean']} color={!form['SOLAR_Boolean'] ? 'gray.dark' : 'warmAccent.base'}>Gas</Button>
+                <Button onClick={() => this.select('SOLAR_Boolean', false)} secondary={!form['SOLAR_Boolean']} color={!form['SOLAR_Boolean'] ? 'gray.dark' : 'warmAccent.base'}>Electric</Button>
+            </Row> */}
           </div>
         </Row>
       </Row>
