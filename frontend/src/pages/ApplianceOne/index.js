@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import Header from '../../components/Header';
+import ListRecommendations from '../../components/ListRecommendations';
 import Row from 'zero-component-library/src/components/Row';
 import Col from 'zero-component-library/src/components/Col';
 import Text from 'zero-component-library/src/components/Text';
@@ -17,7 +18,7 @@ const submitForm = (body) => {
       Accept: 'application/json',
     }),
     body: JSON.stringify(body),
-  });
+  }).then(result => result.json());;
 };
 
 class ApplianceOne extends React.Component {
@@ -30,7 +31,7 @@ class ApplianceOne extends React.Component {
         waterHeater: null,
         dryer: null,
       },
-      reccomendations: [
+      recommendations: [
 
       ]
     };
@@ -45,6 +46,7 @@ class ApplianceOne extends React.Component {
     })
 
     submitForm(form).then(result => {
+      console.log(result)
       this.setState({
         recommendations: result
       });
@@ -69,7 +71,8 @@ class ApplianceOne extends React.Component {
 
   render() {
     const {
-      form
+      form,
+      recommendations,
     } = this.state;
 
     console.log(form)
@@ -78,42 +81,46 @@ class ApplianceOne extends React.Component {
       <Row flexDirection='column' alignItems={'flex-start'}>
         <Header />
         <Row justifyContent='flex-start' flexDirection='column' style={{flexGrow: 1, overflow: 'scroll'}}>
-          <div style={{paddingBottom: '100px'}}>
-            <Row pad={[64, 0, 16, 0]}>
-              <Col xs={12}>
-                <Text size={34} weight='medium'>Let's learn about your appliances.</Text>
-              </Col>
-            </Row>
-            <Row pad={{bottom: 32}}>
-              <Col xs={12}>
-                <Text size={18}>This will help us recommend upgrades.</Text>
-              </Col>
-            </Row>
-            <Row justifyContent='flex-start' pad={{bottom: 8}}>
-                <Text>Is your stove gas or electric?</Text>
-            </Row>
-            <Row pad={{bottom: 16}}>
-                <Button onClick={() => this.handleChange('stove', 'ELECTRIC')} style={{marginRight: '16px'}} secondary color={form['stove'] === 'ELECTRIC' ? 'warmAccent.base' : 'gray.dark'}>Yes</Button>
-                <Button onClick={() => this.handleChange('stove', 'GAS')} secondary color={form['stove'] === 'GAS' ? 'warmAccent.base' : 'gray.dark'}>No</Button>
-            </Row>
-            <Row justifyContent='flex-start' pad={{bottom: 8}}>
-                <Text>Is your water heater gas or electric?</Text>
-            </Row>
-            <Row pad={{bottom: 16}}>
-                <Button onClick={() => this.handleChange('waterHeater', 'ELECTRIC')} style={{marginRight: '16px'}} secondary color={form['waterHeater'] === 'ELECTRIC' ? 'warmAccent.base' : 'gray.dark'}>Yes</Button>
-                <Button onClick={() => this.handleChange('waterHeater', 'GAS')} secondary color={form['waterHeater'] === 'GAS' ?  'warmAccent.base' : 'gray.dark'}>No</Button>
-            </Row>
-            <Row justifyContent='flex-start' pad={{bottom: 8}}>
-                <Text>Is your dryer gas or electric?</Text>
-            </Row>
-            <Row pad={{bottom: 32}}>
-                <Button onClick={() => this.handleChange('dryer', 'ELECTRIC')} style={{marginRight: '16px'}} secondary color={form['dryer'] === 'ELECTRIC' ? 'warmAccent.base' : 'gray.dark'}>Yes</Button>
-                <Button onClick={() => this.handleChange('dryer', 'GAS')} secondary color={form['dryer'] === 'GAS' ?  'warmAccent.base' : 'gray.dark'}>No</Button>
-            </Row>
-            <Row justifyContent='center'>
-                <Button onClick={() => this.handleSubmit()}>Submit</Button>
-            </Row>
-          </div>
+          {
+            recommendations.length 
+              ? <ListRecommendations recs={recommendations} />
+              : <div style={{paddingBottom: '100px'}}>
+                  <Row pad={[64, 0, 16, 0]}>
+                    <Col xs={12}>
+                      <Text size={34} weight='medium'>Let's learn about your appliances.</Text>
+                    </Col>
+                  </Row>
+                  <Row pad={{bottom: 32}}>
+                    <Col xs={12}>
+                      <Text size={18}>This will help us recommend upgrades.</Text>
+                    </Col>
+                  </Row>
+                  <Row justifyContent='flex-start' pad={{bottom: 8}}>
+                      <Text>Is your stove gas or electric?</Text>
+                  </Row>
+                  <Row pad={{bottom: 16}}>
+                      <Button onClick={() => this.handleChange('stove', 'ELECTRIC')} style={{marginRight: '16px'}} secondary color={form['stove'] === 'ELECTRIC' ? 'warmAccent.base' : 'gray.dark'}>Electric</Button>
+                      <Button onClick={() => this.handleChange('stove', 'GAS')} secondary color={form['stove'] === 'GAS' ? 'warmAccent.base' : 'gray.dark'}>Gas</Button>
+                  </Row>
+                  <Row justifyContent='flex-start' pad={{bottom: 8}}>
+                      <Text>Is your water heater gas or electric?</Text>
+                  </Row>
+                  <Row pad={{bottom: 16}}>
+                      <Button onClick={() => this.handleChange('waterHeater', 'ELECTRIC')} style={{marginRight: '16px'}} secondary color={form['waterHeater'] === 'ELECTRIC' ? 'warmAccent.base' : 'gray.dark'}>Electric</Button>
+                      <Button onClick={() => this.handleChange('waterHeater', 'GAS')} secondary color={form['waterHeater'] === 'GAS' ?  'warmAccent.base' : 'gray.dark'}>Gas</Button>
+                  </Row>
+                  <Row justifyContent='flex-start' pad={{bottom: 8}}>
+                      <Text>Is your dryer gas or electric?</Text>
+                  </Row>
+                  <Row pad={{bottom: 32}}>
+                      <Button onClick={() => this.handleChange('dryer', 'ELECTRIC')} style={{marginRight: '16px'}} secondary color={form['dryer'] === 'ELECTRIC' ? 'warmAccent.base' : 'gray.dark'}>Electric</Button>
+                      <Button onClick={() => this.handleChange('dryer', 'GAS')} secondary color={form['dryer'] === 'GAS' ?  'warmAccent.base' : 'gray.dark'}>Gas</Button>
+                  </Row>
+                  <Row justifyContent='center'>
+                      <Button onClick={() => this.handleSubmit()}>Submit</Button>
+                  </Row>
+                </div>
+            }
         </Row>
       </Row>
     );

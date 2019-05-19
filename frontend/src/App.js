@@ -19,7 +19,7 @@ function App() {
             </Row>
             <Row justifyContent={'center'}>
               <Col xs={12} pad={{top: 16}}>
-                <Text weight='medium' singleLine align='center' size={42}>Electrify red Your Home</Text>
+                <Text weight='medium' singleLine align='center' size={42}>Electrify Your Home</Text>
               </Col>
             </Row>
             <Row justifyContent={'center'} pad={{top: 32}}>

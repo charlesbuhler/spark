@@ -17,7 +17,7 @@ const submitForm = (body) => {
       Accept: 'application/json',
     }),
     body: JSON.stringify(body),
-  });
+  }).then(result => result.json());
 };
 
 class HomeOne extends React.Component {
@@ -93,10 +93,10 @@ class HomeOne extends React.Component {
                 <Input label='City' placeholder='What city do you live in?' onChange={(e) => this.handleChange('CITY', e.target.value)} />
             </Row>
             <Row justifyContent='center' pad={{bottom: 24}}>
-                <Input label='Square Footage' placeholder='What is the square footage of your home?'  onChange={(e) => this.handleChange('TOTAL_AREA', e.target.value)} />
+                <Input type='number' label='Square Footage' placeholder='What is the square footage of your home?'  onChange={(e) => this.handleChange('TOTAL_AREA', parseInt(e.target.value))} />
             </Row>
             <Row justifyContent='center' pad={{bottom: 24}}>
-              <Input label='Bedrooms' placeholder='How many bedrooms is your home?'  onChange={(e) => this.handleChange('BEDROOMS', e.target.value)} />
+              <Input type='number' label='Bedrooms' placeholder='How many bedrooms is your home?'  onChange={(e) => this.handleChange('BEDROOMS', parseInt(e.target.value))} />
             </Row>
             <Row justifyContent='center' pad={{bottom: 24}}>
                 <Input label='Home Age' placeholder='When was your home built?'  onChange={(e) => this.handleChange('DECADE_BUILT', e.target.value)} />
