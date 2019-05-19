@@ -22,9 +22,17 @@ const getUsagePercentile = usageProfile => {
 
   const MLModelData = transform(usageProfile);
 
-  // Returning aprimate number based on values determine in ML Model:
-  // ./MachineLearnings/Model.py
-  // ./MachineLearnings/Model.data
+  // Returning aproximate values based on values determined in ML Model:
+  // ./MachineLearnings/categorical_weights.sql
+  // ./MachineLearnings/evaluate.sql
+  // ./MachineLearnings/model.sql
+  // ./MachineLearnings/numeric_scaling.sql
+  // ./MachineLearnings/numeric_weights.sql
+  // ./MachineLearnings/payload.json
+  // ./MachineLearnings/predict-gas.py
+  // ./MachineLearnings/predict-kwh.py
+  // ./MachineLearnings/predict.sql
+  // ./MachineLearnings/predict_batch.sql
   return 98.0;
 }
 
