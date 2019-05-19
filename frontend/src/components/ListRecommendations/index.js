@@ -20,15 +20,15 @@ export default ({recs}) => {
 
   return (
     <div style={{paddingBottom: '100px'}}>
-      <Row pad={[64, 16, 16, 0]}>
-        <Col xs={12}>
+      <Row justifyContent='center' pad={[64, 16, 16, 0]}>
+        <Col xs={8}>
           <Text size={34} weight='medium'>Here is what we recommend.</Text>
         </Col>
       </Row>
       {
         recs.map((rec, index) => {
           return (
-            <Row key={index} pad={{bottom: 16}}>
+            <Row justifyContent='center' key={index} pad={{bottom: 16}}>
               <Col xs={8}>
                 <Panel>
                   <Row key={index} pad={{bottom: 16}}>

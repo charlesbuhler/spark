@@ -80,7 +80,7 @@ class ApplianceOne extends React.Component {
     return (
       <Row flexDirection='column' alignItems={'flex-start'}>
         <Header />
-        <Row justifyContent='flex-start' flexDirection='column' style={{flexGrow: 1, overflow: 'scroll'}}>
+        <Row justifyContent='center' flexDirection='column' style={{flexGrow: 1, overflow: 'scroll'}}>
           {
             recommendations.length 
               ? <ListRecommendations recs={recommendations} />

@@ -54,7 +54,7 @@ class Viability extends React.Component {
         <Row justifyContent='flex-start' flexDirection='column' style={{flexGrow: 1}}>
           <div style={{paddingBottom: '100px'}}>
             <Row justifyContent='center' pad={[64, 0, 32, 0]}>
-              <Col xs={10}>
+              <Col xs={7}>
                 <Text size={34} align='center' weight='medium'>Your estimated gas usage is <Text weight={'medium'} size={34} inline color='#FF9678'>{therms} therms</Text> which puts you in the <Text weight={'medium'} size={34} inline color='#FF9678'>{percentile}th</Text> percentile of energy usage!</Text>
               </Col>
             </Row>
