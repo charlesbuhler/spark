@@ -33,7 +33,7 @@ const getUsagePercentile = usageProfile => {
   // ./MachineLearnings/predict-kwh.py
   // ./MachineLearnings/predict.sql
   // ./MachineLearnings/predict_batch.sql
-  return 98.0;
+  return 91.4;
 }
 
 module.exports = { getUsagePercentile }
