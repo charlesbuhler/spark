@@ -42,6 +42,21 @@ export default ({recs}) => {
                       <Text size={16}>{rec.recommendation}</Text>
                     </Col>
                   </Row>
+                  <Row pad={{bottom: 8}}>
+                    <Col xs={8}>
+                      <Text inline weight='medium' color={'#394C66'} size={14}>Available Incentives: <Text inline color={'#1CA1A7'} size={14}>{rec.incentives}</Text></Text>
+                    </Col>
+                  </Row>
+                  <Row pad={{bottom: 8}}>
+                    <Col xs={8}>
+                      <Text inline  weight='medium'  color={'#394C66'} size={14}>Monthly Cost (10y payback): <Text inline color={'#1CA1A7'} size={14}>{rec.ten_year_financing}</Text></Text>
+                    </Col>
+                  </Row>
+                  <Row pad={{bottom: 24}}>
+                    <Col xs={8}>
+                      <Text inline  weight='medium' color={'#394C66'} size={14}>Monthly Cost (20y payback): <Text inline color={'#1CA1A7'} size={14}>{rec.twenty_year_financing}</Text></Text>
+                    </Col>
+                  </Row>
                   <div style={{display: 'inline-flex', alignItems: 'center', paddingBottom: '16px'}}>
                     <Text inline style={{borderBottom: '1px dashed black'}} onClick={() => setIsOpen(!isOpen)}>Learn more</Text>
                     <IconChevronDown size={16} />
