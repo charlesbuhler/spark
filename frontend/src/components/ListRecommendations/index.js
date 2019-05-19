@@ -20,7 +20,7 @@ export default ({recs}) => {
 
   return (
     <div style={{paddingBottom: '100px'}}>
-      <Row pad={[64, 16, 16, 16]}>
+      <Row pad={[64, 16, 16, 0]}>
         <Col xs={12}>
           <Text size={34} weight='medium'>Here is what we recommend.</Text>
         </Col>
