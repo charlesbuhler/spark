@@ -108,4 +108,22 @@ app.post('/get-recommendations', cors(corsOptions), (req, res) => {
   res.status(200).send(usagePercentilePayload);
 });
 
+/**
+ * Get recomendations on what to retrofit given the applience profile
+ * in a homeowner's home.
+ *
+ */
+app.post('/get-cost-breakdown', cors(corsOptions), (req, res) => {
+  const requestPayload = req.body;
+
+  if (!requestPayload) {
+    res.status(400).send({'message': 'Missing data'});
+    return;
+  }
+
+  const costBreakdown = getCostBreakdown(requestPayload)
+
+  res.status(200).send(costBreakdown);
+});
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
