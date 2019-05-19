@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
-const { getUsagePercentile } = require('./Services/RetrofitService');
+const { getUsagePercentile, getThermUsage } = require('./Services/RetrofitService');
 const { getRecommendations } = require('./Services/RecommendationService');
 
 const app = express()
@@ -84,7 +84,8 @@ app.post('/retrofit-viability', cors(corsOptions), (req, res) => {
   }
 
   const usagePercentilePayload = {
-    'usagePercentile': getUsagePercentile(requestPayload)
+    'usagePercentile': getUsagePercentile(requestPayload),
+    'therms': getThermUsage(requestPayload)
   }
 
   res.status(200).send(usagePercentilePayload);
