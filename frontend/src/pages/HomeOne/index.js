@@ -47,7 +47,8 @@ class HomeOne extends React.Component {
     })
 
     submitForm(form).then(result => {
-      history.push(`viability?percentile=${result}`);
+      console.log(result)
+      history.push(`viability?percentile=${result.usagePercentile}&therms=${result.therms}`);
     }).catch(e => {
       console.log(e)
     }).finally(() => {

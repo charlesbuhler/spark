@@ -38,7 +38,8 @@ class Viability extends React.Component {
 
   render() {
     const {
-      percentile
+      percentile,
+      therms,
     } = this.state;
 
     console.log('percentile', percentile);
@@ -53,8 +54,8 @@ class Viability extends React.Component {
         <Row justifyContent='flex-start' flexDirection='column' style={{flexGrow: 1}}>
           <div style={{paddingBottom: '100px'}}>
             <Row justifyContent='center' pad={[64, 0, 32, 0]}>
-              <Col xs={8}>
-                <Text size={34} align='center' weight='medium'>Your estimated gas usage is in the <Text weight={'medium'} size={34} inline color='#FF9678'>{percentile}th</Text> percentile!</Text>
+              <Col xs={10}>
+                <Text size={34} align='center' weight='medium'>Your estimated gas usage is <Text weight={'medium'} size={34} inline color='#FF9678'>{therms}</Text> which puts you in the <Text weight={'medium'} size={34} inline color='#FF9678'>{percentile}th</Text> percentile of energy usage!</Text>
               </Col>
             </Row>
             <Row justifyContent='center'>
