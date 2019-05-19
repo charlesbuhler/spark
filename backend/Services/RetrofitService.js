@@ -17,7 +17,8 @@ const validateSchema = usageProfile => {
 
 const getThermUsage = usageProfile => {
   // Average therm usage for a household
-  return 516;
+  // Over entire ML data set
+  return 617;
 }
 
 const getUsagePercentile = usageProfile => {
