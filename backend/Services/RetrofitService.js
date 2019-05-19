@@ -15,6 +15,11 @@ const validateSchema = usageProfile => {
   return true;
 }
 
+const getThermUsage = usageProfile => {
+  // Average therm usage for a household
+  return 516;
+}
+
 const getUsagePercentile = usageProfile => {
   if (!validateSchema(usageProfile)) {
     return "Missing data."
@@ -36,4 +41,4 @@ const getUsagePercentile = usageProfile => {
   return 91.4;
 }
 
-module.exports = { getUsagePercentile }
+module.exports = { getUsagePercentile, getThermUsage }
